@@ -11,19 +11,16 @@ import {
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Switch } from '@/components/ui/switch';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 const SettingsDialog = () => {
-  const [theme, setTheme] = useState('system');
+  const [theme, setTheme] = useState(() => {
+    if (typeof window === 'undefined') return 'system';
+    return localStorage.getItem('theme') || 'system';
+  });
   const [notifications, setNotifications] = useState(true);
 
-  useEffect(() => {
-    const storedTheme = localStorage.getItem('theme') || 'system';
-    setTheme(storedTheme);
-    applyTheme(storedTheme);
-  }, []);
-
-  const applyTheme = (selectedTheme: string) => {
+  const applyTheme = useCallback((selectedTheme: string) => {
     if (selectedTheme === 'dark') {
       document.documentElement.classList.add('dark');
     } else if (selectedTheme === 'light') {
@@ -36,7 +33,11 @@ const SettingsDialog = () => {
         document.documentElement.classList.remove('dark');
       }
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    applyTheme(theme);
+  }, [applyTheme, theme]);
 
   const handleThemeChange = (value: string) => {
     setTheme(value);

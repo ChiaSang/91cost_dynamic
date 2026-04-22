@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   Area,
   CartesianGrid,
@@ -62,125 +62,137 @@ export default function PowerChartCard() {
   const [error, setError] = useState<string | null>(null);
   const [timeRange, setTimeRange] = useState<TimeRange>('24h');
 
-  const fetchData = useCallback(async (range: TimeRange) => {
-    setLoading(true);
-    setError(null);
+  useEffect(() => {
+    let cancelled = false;
 
-    try {
-      const now = Date.now();
-      const from = TIME_RANGES[range].from();
+    const loadData = async () => {
+      setLoading(true);
+      setError(null);
 
-      // Determine aggregation window based on time range
-      let intervalMs = 60000; // 1 minute
-      if (range === '7d') intervalMs = 600000; // 10 minutes
-      if (range === '30d') intervalMs = 3600000; // 1 hour
+      try {
+        const now = Date.now();
+        const from = TIME_RANGES[timeRange].from();
 
-      const windowPeriod = `every: ${Math.max(1, Math.round(intervalMs / 1000))}s`;
+        // Determine aggregation window based on time range
+        let intervalMs = 60000; // 1 minute
+        if (timeRange === '7d') intervalMs = 600000; // 10 minutes
+        if (timeRange === '30d') intervalMs = 3600000; // 1 hour
 
-      const body = {
-        queries: [
-          {
-            alias: 'Power',
-            datasource: {
-              type: 'influxdb',
-              uid: 'fdotvxo814zy8a',
-            },
-            groupBy: [
-              { params: ['$__interval'], type: 'time' },
-              { params: ['previous'], type: 'fill' },
-            ],
-            measurement: 'device_data',
-            orderByTime: 'ASC',
-            policy: 'default',
-            query: `from(bucket: "ZHUOHU")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r["_measurement"] == "device_data")\n  |> filter(fn: (r) => r["_field"] == "P_value")\n  |> filter(fn: (r) => r["did"] == "WX3E3FJFOYh18XmlJfDMHH")\n  |> aggregateWindow(${windowPeriod}, fn: mean, createEmpty: false)\n  |> map(fn: (r) => ({ r with display_name: r._field }))\n  |> yield(name: "mean")`,
-            refId: 'A',
-            resultFormat: 'time_series',
-            select: [
-              [
-                { params: ['P_value'], type: 'field' },
-                { params: [], type: 'mean' },
+        const windowPeriod = `every: ${Math.max(1, Math.round(intervalMs / 1000))}s`;
+
+        const body = {
+          queries: [
+            {
+              alias: 'Power',
+              datasource: {
+                type: 'influxdb',
+                uid: 'fdotvxo814zy8a',
+              },
+              groupBy: [
+                { params: ['$__interval'], type: 'time' },
+                { params: ['previous'], type: 'fill' },
               ],
-            ],
-            tags: [],
-            tz: 'Asia/Shanghai',
-            datasourceId: 1,
-            intervalMs,
-            maxDataPoints: 700,
+              measurement: 'device_data',
+              orderByTime: 'ASC',
+              policy: 'default',
+              query: `from(bucket: "ZHUOHU")\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r["_measurement"] == "device_data")\n  |> filter(fn: (r) => r["_field"] == "P_value")\n  |> filter(fn: (r) => r["did"] == "WX3E3FJFOYh18XmlJfDMHH")\n  |> aggregateWindow(${windowPeriod}, fn: mean, createEmpty: false)\n  |> map(fn: (r) => ({ r with display_name: r._field }))\n  |> yield(name: "mean")`,
+              refId: 'A',
+              resultFormat: 'time_series',
+              select: [
+                [
+                  { params: ['P_value'], type: 'field' },
+                  { params: [], type: 'mean' },
+                ],
+              ],
+              tags: [],
+              tz: 'Asia/Shanghai',
+              datasourceId: 1,
+              intervalMs,
+              maxDataPoints: 700,
+            },
+          ],
+          from: String(from),
+          to: String(now),
+        };
+
+        const res = await fetch('https://gra.91cost.cn/api/ds/query?ds_type=influxdb', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
           },
-        ],
-        from: String(from),
-        to: String(now),
-      };
+          body: JSON.stringify(body),
+        });
 
-      const res = await fetch('https://gra.91cost.cn/api/ds/query?ds_type=influxdb', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify(body),
-      });
+        if (!res.ok) {
+          throw new Error(`请求失败: ${res.status}`);
+        }
 
-      if (!res.ok) {
-        throw new Error(`请求失败: ${res.status}`);
-      }
+        const json: GrafanaResponse = await res.json();
 
-      const json: GrafanaResponse = await res.json();
+        // Parse Grafana response frames
+        const points: DataPoint[] = [];
+        if (json.results) {
+          for (const result of json.results) {
+            if (!result.frames) continue;
+            for (const frame of result.frames) {
+              if (!frame.data?.values || !frame.schema?.fields) continue;
 
-      // Parse Grafana response frames
-      const points: DataPoint[] = [];
-      if (json.results) {
-        for (const result of json.results) {
-          if (!result.frames) continue;
-          for (const frame of result.frames) {
-            if (!frame.data?.values || !frame.schema?.fields) continue;
+              const fields = frame.schema.fields;
+              const values = frame.data.values;
 
-            const fields = frame.schema.fields;
-            const values = frame.data.values;
-
-            // Find time field index and value field index
-            let timeIdx = -1;
-            let valueIdx = -1;
-            for (let i = 0; i < fields.length; i++) {
-              if (fields[i].type === 'time' && timeIdx === -1) {
-                timeIdx = i;
+              // Find time field index and value field index
+              let timeIdx = -1;
+              let valueIdx = -1;
+              for (let i = 0; i < fields.length; i++) {
+                if (fields[i].type === 'time' && timeIdx === -1) {
+                  timeIdx = i;
+                }
+                if ((fields[i].name === 'P_value' || fields[i].type === 'number') && valueIdx === -1) {
+                  valueIdx = i;
+                }
               }
-              if ((fields[i].name === 'P_value' || fields[i].type === 'number') && valueIdx === -1) {
-                valueIdx = i;
+
+              if (timeIdx === -1 || valueIdx === -1) continue;
+
+              const timeArr = values[timeIdx];
+              const valArr = values[valueIdx];
+
+              for (let j = 0; j < timeArr.length; j++) {
+                const ts = Number(timeArr[j]);
+                const val = valArr[j] !== null ? Number(valArr[j]) : 0;
+                points.push({
+                  time: formatTime(ts),
+                  power: Math.round(val * 100) / 100,
+                });
               }
-            }
-
-            if (timeIdx === -1 || valueIdx === -1) continue;
-
-            const timeArr = values[timeIdx];
-            const valArr = values[valueIdx];
-
-            for (let j = 0; j < timeArr.length; j++) {
-              const ts = Number(timeArr[j]);
-              const val = valArr[j] !== null ? Number(valArr[j]) : 0;
-              points.push({
-                time: formatTime(ts),
-                power: Math.round(val * 100) / 100,
-              });
             }
           }
         }
+
+        if (!cancelled) {
+          setData(points);
+        }
+      } catch (err: unknown) {
+        const msg = err instanceof Error ? err.message : '数据获取失败';
+        if (!cancelled) {
+          setError(msg);
+          // Fallback to mock data
+          setData(generateMockData(timeRange));
+        }
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
+        }
       }
+    };
 
-      setData(points);
-    } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : '数据获取失败';
-      setError(msg);
-      // Fallback to mock data
-      setData(generateMockData(range));
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+    void loadData();
 
-  useEffect(() => {
-    fetchData(timeRange);
-  }, [timeRange, fetchData]);
+    return () => {
+      cancelled = true;
+    };
+  }, [timeRange]);
 
   const stats = useMemo(() => {
     if (data.length === 0) return { current: 0, avg: 0, max: 0, min: 0 };
