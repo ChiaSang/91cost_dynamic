@@ -1,6 +1,6 @@
 // 組み込みモジュール
 import { promises as fs } from 'fs';
-import { URL } from 'node:url';
+import { fileURLToPath, URL } from 'node:url';
 
 // 外部ライブラリ/フレームワーク
 import react from '@astrojs/react';
@@ -57,11 +57,13 @@ export default defineConfig({
         // Astroビルドプロセス完了後に実行されるフック
         'astro:build:done': async ({ dir }) => {
           try {
+            const outDirPath = fileURLToPath(dir);
+
             // 不要なシステムファイルをglobパターンで検索
             // .DS_Store: macOSのフォルダメタデータファイル
             // Thumbs.db: Windowsのサムネイルキャッシュ
             // Desktop.ini: Windowsフォルダの表示設定ファイル
-            const junkFiles = await glob(`${dir.pathname}/**/{.DS_Store,Thumbs.db,Desktop.ini}`);
+            const junkFiles = await glob(`${outDirPath}/**/{.DS_Store,Thumbs.db,Desktop.ini}`);
             console.log(`Found ${junkFiles.length} junk files to delete`);
 
             // 検出した不要ファイルを一つずつ削除
@@ -71,7 +73,7 @@ export default defineConfig({
 
             // macOS特有の隠しディレクトリを検索
             // __MAXCOSXディレクトリはzipファイル解凍時などに生成される不要ディレクトリ
-            const macosxDirs = await glob(`${dir.pathname}/**/__MACOSX`);
+            const macosxDirs = await glob(`${outDirPath}/**/__MACOSX`);
             console.log(`Found ${macosxDirs.length} __MACOSX directories to delete`);
 
             // 検出した__MAXCOSXディレクトリを一つずつ削除

@@ -5,11 +5,12 @@
  */
 
 // 基本モジュールのインポート
-import path from 'node:path';
-import fs from 'node:fs';
-import chalk from 'chalk';
-import prettier from 'prettier';
 import type { AstroIntegration } from 'astro';
+import chalk from 'chalk';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import prettier from 'prettier';
 
 /**
  * HTMLフォーマッターの設定オプションの型定義
@@ -128,7 +129,8 @@ export default function htmlBeautifier(options: Partial<FormatterOptions> = {}):
           console.log(chalk.blue.bold('\nFormatting HTML files...'));
 
           // ビルド出力ディレクトリ内のすべてのファイルを取得
-          const allFiles = getAllFiles(dir.pathname);
+          const outDirPath = fileURLToPath(dir);
+          const allFiles = getAllFiles(outDirPath);
 
           // HTMLファイルのみをフィルタリング
           const htmlFiles = allFiles.filter(filePath => path.extname(filePath) === '.html');
