@@ -1,0 +1,171 @@
+---
+import GrafanaCard from '@/components/GrafanaCard.astro';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import Layout from '@/layouts/Layout.astro';
+import type { PageMeta } from '@/lib/constants';
+
+const meta: PageMeta = {
+  title: '数据平台 - 91cost',
+  description: '家庭能耗监测与空气质量数据查询平台，支持手机查看和家庭成员共享',
+  ogType: 'website',
+};
+
+const dataDashboards = [
+  {
+    title: '家庭用能监测',
+    description: '实时查看家庭电、水、燃气等用能数据，支持分项统计和趋势分析',
+    url: '/contact',
+    metrics: [
+      { label: '今日用电', value: '12.4 kWh', trend: 'down' },
+      { label: '今日用气', value: '3.1 m³', trend: 'stable' },
+      { label: '今日用水', value: '0.8 m³', trend: 'up' },
+      { label: '节能指数', value: '82', trend: 'up' },
+    ],
+    tags: ['分项计量', '账单分析', '节能'],
+    preview: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80',
+  },
+  {
+    title: '空气健康监测',
+    description: '实时监测室内温湿度、CO2、PM2.5、甲醛等空气指标',
+    url: '/contact',
+    metrics: [
+      { label: '当前温度', value: '24.5°C', trend: 'stable' },
+      { label: '相对湿度', value: '55%', trend: 'stable' },
+      { label: 'CO2浓度', value: '680 ppm', trend: 'down' },
+      { label: 'PM2.5', value: '18 μg/m³', trend: 'down' },
+    ],
+    tags: ['PM2.5', 'CO2', '温湿度', '甲醛'],
+    preview: 'https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=800&q=80',
+  },
+  {
+    title: '设备运行状态',
+    description: '监测空调、净化器、新风机等设备运行状态和能效表现',
+    url: '/contact',
+    metrics: [
+      { label: '运行时长', value: '6.2 h', trend: 'stable' },
+      { label: '当前功率', value: '0.42 kW', trend: 'down' },
+      { label: '待机功耗', value: '18 W', trend: 'stable' },
+      { label: '设备健康', value: '良好', trend: 'stable' },
+    ],
+    tags: ['空调', '净化器', '新风'],
+    preview: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80',
+  },
+  {
+    title: '家庭数据统计',
+    description: '支持自定义时间范围、趋势分析和数据导出，方便家庭长期管理',
+    url: '/contact',
+    metrics: [
+      { label: '月度节能', value: '12.5%', trend: 'up' },
+      { label: '空气达标率', value: '96.8%', trend: 'up' },
+      { label: '数据质量', value: '99.2%', trend: 'stable' },
+      { label: '接入设备', value: '1,280', trend: 'up' },
+    ],
+    tags: ['数据分析', '报表导出', '趋势预测'],
+    preview: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80',
+  },
+];
+
+const dataFeatures = [
+  {
+    name: '数据采集',
+    description: '支持多种协议的数据采集，兼容家庭常见计量与传感设备',
+    icon: '📡',
+    link: '#',
+  },
+  {
+    name: '数据存储',
+    description: '高可靠性的时序数据存储，支持长期趋势回看',
+    icon: '💾',
+    link: '#',
+  },
+  {
+    name: '数据分析',
+    description: '丰富的数据分析模型，支持家庭账单和空气健康分析',
+    icon: '📈',
+    link: '#',
+  },
+  {
+    name: '数据共享',
+    description: '支持家庭成员共享查看与后续服务对接',
+    icon: '🔗',
+    link: '#',
+  },
+];
+---
+
+<Layout {...meta}>
+  <!-- Hero Section -->
+  <section class='from-primary/5 to-background bg-linear-to-b py-16'>
+    <div class='container mx-auto px-4 text-center'>
+      <h1 class='mb-4 text-4xl font-bold tracking-tight'>数据平台</h1>
+      <p class='text-muted-foreground mx-auto mb-8 max-w-2xl text-lg'>
+        家庭能耗监测与空气健康数据查询平台，支持手机查看和家庭成员共享
+      </p>
+    </div>
+  </section>
+
+  <!-- Data Dashboards Section -->
+  <section class='py-12'>
+    <div class='container mx-auto px-4'>
+      <div class='mb-8 flex items-center justify-between'>
+        <div>
+          <h2 class='mb-2 text-2xl font-bold'>数据面板</h2>
+          <p class='text-muted-foreground'>点击即可查看家庭数据监测面板</p>
+        </div>
+        <a href='/contact' target='_blank' class='text-primary text-sm hover:underline'> 预约开通 → </a>
+      </div>
+
+      <div class='grid gap-6 md:grid-cols-2'>
+        {dataDashboards.map(dashboard => <GrafanaCard {...dashboard} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- Data Features Section -->
+  <section class='bg-muted/50 py-12'>
+    <div class='container mx-auto px-4'>
+      <h2 class='mb-8 text-2xl font-bold'>平台功能</h2>
+      <div class='grid gap-4 md:grid-cols-2 lg:grid-cols-4'>
+        {
+          dataFeatures.map(feature => (
+            <Card className='transition-all hover:shadow-md'>
+              <CardHeader className='pb-2'>
+                <div class='mb-2 text-3xl'>{feature.icon}</div>
+                <CardTitle className='text-lg'>{feature.name}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <CardDescription className='mb-3'>{feature.description}</CardDescription>
+                <a
+                  href={feature.link}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  class='text-primary text-xs hover:underline'
+                >
+                  了解更多 →
+                </a>
+              </CardContent>
+            </Card>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class='py-12'>
+    <div class='container mx-auto px-4'>
+      <Card className='border-primary/20 bg-primary/5'>
+        <CardContent className='py-8 text-center'>
+          <h3 class='mb-4 text-2xl font-bold'>需要接入数据？</h3>
+          <p class='text-muted-foreground mb-6'>我们可以帮助您接入家庭能耗和空气质量数据，提供专业的设置支持</p>
+          <a
+            href='/contact'
+            class='bg-primary text-primary-foreground hover:bg-primary/90 inline-flex items-center justify-center rounded-md px-6 py-3 text-sm font-medium shadow transition-colors'
+          >
+            联系我们
+          </a>
+        </CardContent>
+      </Card>
+    </div>
+  </section>
+</Layout>

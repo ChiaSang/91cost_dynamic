@@ -1,0 +1,167 @@
+---
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import Layout from '@/layouts/Layout.astro';
+import type { PageMeta } from '@/lib/constants';
+
+const meta: PageMeta = {
+  title: '联系我们 - 91cost',
+  description: '欢迎联系我们获取家庭暖通、空气健康和节能管理方面的咨询支持',
+  ogType: 'website',
+};
+
+const contactMethods = [
+  {
+    icon: '📧',
+    title: '邮箱',
+    value: 'contact@91cost.com',
+    href: 'mailto:contact@91cost.com',
+  },
+  {
+    icon: '📱',
+    title: '电话',
+    value: '+86 123 4567 8901',
+    href: 'tel:+8612345678901',
+  },
+  {
+    icon: '💬',
+    title: '微信',
+    value: '91cost_service',
+    href: '#',
+  },
+  {
+    icon: '🌐',
+    title: '网站',
+    value: 'https://91cost.com',
+    href: 'https://91cost.com',
+  },
+];
+
+const faqs = [
+  {
+    q: '你们的服务流程是怎样的？',
+    a: '我们会先了解您的户型、居住习惯和预算，再提供上门评估、方案设计、安装调试和后续支持。',
+  },
+  {
+    q: '可以先提供免费咨询吗？',
+    a: '可以。您可以通过邮件或微信联系我们，简单描述家里的情况，我们会安排人员做初步沟通。',
+  },
+  {
+    q: '你们主要服务哪些家庭场景？',
+    a: '我们主要面向新房装修、旧房改造、空调升级、新风净化和空气质量监测等家庭场景。',
+  },
+  {
+    q: '如何保证服务质量？',
+    a: '每个家庭都会有对应的方案负责人，安装后还会提供调试建议和长期使用指导。',
+  },
+];
+---
+
+<Layout {...meta}>
+  <!-- Hero Section -->
+  <section class='from-primary/5 to-background bg-linear-to-b py-16'>
+    <div class='container mx-auto px-4 text-center'>
+      <h1 class='mb-4 text-4xl font-bold tracking-tight'>联系我们</h1>
+      <p class='text-muted-foreground mx-auto mb-8 max-w-2xl text-lg'>
+        家庭装修、空调改造、新风净化或空气质量问题，都欢迎联系我们
+      </p>
+    </div>
+  </section>
+
+  <!-- Contact Methods -->
+  <section class='py-12'>
+    <div class='container mx-auto px-4'>
+      <div class='grid gap-4 md:grid-cols-4'>
+        {
+          contactMethods.map(method => (
+            <Card className='text-center transition-all hover:shadow-md'>
+              <CardContent className='py-6'>
+                <div class='mb-3 text-3xl'>{method.icon}</div>
+                <div class='text-muted-foreground text-sm font-medium'>{method.title}</div>
+                <a href={method.href} class='text-primary mt-1 block hover:underline'>
+                  {method.value}
+                </a>
+              </CardContent>
+            </Card>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Form -->
+  <section class='bg-muted/50 py-12'>
+    <div class='container mx-auto px-4'>
+      <div class='mx-auto max-w-2xl'>
+        <Card>
+          <CardHeader>
+            <CardTitle className='text-2xl'>发送咨询</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <form class='grid gap-4' action='#' method='POST'>
+              <div class='grid gap-2'>
+                <Label htmlFor='name'>姓名 *</Label>
+                <Input id='name' name='name' placeholder='请输入您的姓名' required />
+              </div>
+              <div class='grid gap-2'>
+                <Label htmlFor='email'>邮箱 *</Label>
+                <Input id='email' name='email' type='email' placeholder='请输入您的邮箱' required />
+              </div>
+              <div class='grid gap-2'>
+                <Label htmlFor='household'>家庭类型</Label>
+                <Input id='household' name='household' placeholder='例如：两居室、三口之家、改善型住宅' />
+              </div>
+              <div class='grid gap-2'>
+                <Label htmlFor='service'>咨询类型</Label>
+                <select
+                  id='service'
+                  name='service'
+                  class='border-input focus-visible:ring-ring/20 flex h-9 w-full rounded-md border bg-transparent px-3 py-1 text-sm shadow-xs transition-colors focus-visible:ring-[3px] focus-visible:outline-none'
+                >
+                  <option value=''>请选择咨询类型</option>
+                  <option value='ac'>空调优化</option>
+                  <option value='fresh'>新风净化</option>
+                  <option value='energy'>家庭能耗管理</option>
+                  <option value='air'>空气健康监测</option>
+                  <option value='other'>其他</option>
+                </select>
+              </div>
+              <div class='grid gap-2'>
+                <Label htmlFor='message'>咨询内容 *</Label>
+                <Textarea id='message' name='message' placeholder='请详细描述您的需求或问题...' rows={5} required />
+              </div>
+              <Button type='submit' size='lg' className='w-full'> 提交咨询 </Button>
+            </form>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class='py-12'>
+    <div class='container mx-auto px-4'>
+      <h2 class='mb-8 text-center text-2xl font-bold'>常见问题</h2>
+      <div class='mx-auto max-w-3xl space-y-4'>
+        {
+          faqs.map((faq, index) => (
+            <Card>
+              <CardHeader>
+                <CardTitle className='flex items-start gap-3 text-base'>
+                  <span class='text-primary'>{index + 1}.</span>
+                  {faq.q}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p class='text-muted-foreground'>{faq.a}</p>
+              </CardContent>
+            </Card>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</Layout>

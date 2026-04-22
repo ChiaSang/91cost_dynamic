@@ -1,0 +1,155 @@
+---
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import Layout from '@/layouts/Layout.astro';
+import type { PageMeta } from '@/lib/constants';
+
+const meta: PageMeta = {
+  title: '解决方案 - 91cost',
+  description: '提供面向家庭和个人的空调优化、新风净化、能耗管理与空气健康解决方案',
+  ogType: 'website',
+};
+
+const services = [
+  {
+    title: '家庭空调优化',
+    description: '针对客厅、卧室和全屋空调进行舒适度、送风和能耗优化',
+    icon: '❄️',
+    features: ['空调布局建议', '风感与噪音优化', '分区温控建议', '能耗与电费分析', '设备选型咨询'],
+    tags: ['空调优化', '舒适度', '节能'],
+  },
+  {
+    title: '家庭新风净化',
+    description: '提供新风、净化、除湿和换气方案，让室内空气更清新',
+    icon: '📊',
+    features: ['新风系统设计', '净化设备配置', '除湿与换气建议', '噪音控制', '滤网维护提醒'],
+    tags: ['新风', '净化', '除湿'],
+  },
+  {
+    title: '家庭能耗管理',
+    description: '帮助您看懂家庭用电、用水和设备运行情况，找到节能空间',
+    icon: '🌬️',
+    features: ['用能统计看板', '账单趋势分析', '异常用能提醒', '家庭成员共享', '节能建议'],
+    tags: ['用能管理', '账单分析', '节能'],
+  },
+  {
+    title: '空气健康监测',
+    description: '实时监测温湿度、CO2、PM2.5等空气指标，守护家人呼吸健康',
+    icon: '🔗',
+    features: ['温湿度监测', '空气质量提醒', '历史趋势查询', '手机端查看', '家庭共享'],
+    tags: ['空气健康', 'PM2.5', 'CO2'],
+  },
+];
+
+const process = [
+  {
+    step: '01',
+    title: '需求沟通',
+    description: '了解户型、人数、使用习惯和预算',
+  },
+  {
+    step: '02',
+    title: '上门评估',
+    description: '现场查看空间布局、设备位置和通风条件',
+  },
+  {
+    step: '03',
+    title: '方案设计',
+    description: '制定适合家庭的舒适、节能和空气健康方案',
+  },
+  {
+    step: '04',
+    title: '安装调试',
+    description: '完成安装、调试和后续使用指导',
+  },
+];
+---
+
+<Layout {...meta}>
+  <!-- Hero Section -->
+  <section class='from-primary/5 to-background bg-linear-to-b py-16'>
+    <div class='container mx-auto px-4 text-center'>
+      <h1 class='mb-4 text-4xl font-bold tracking-tight'>家庭解决方案</h1>
+      <p class='text-muted-foreground mx-auto mb-8 max-w-2xl text-lg'>
+        面向家庭客户和个人用户，提供舒适家居、空气健康和节能用能方案
+      </p>
+    </div>
+  </section>
+
+  <!-- Services Grid -->
+  <section class='py-12'>
+    <div class='container mx-auto px-4'>
+      <div class='grid gap-8'>
+        {
+          services.map((service, index) => (
+            <Card className={`overflow-hidden ${index % 2 === 1 ? 'md:flex-row-reverse' : ''}`}>
+              <div class='bg-primary/5 p-8 md:w-1/3'>
+                <div class='text-6xl'>{service.icon}</div>
+                <h3 class='mt-4 text-2xl font-bold'>{service.title}</h3>
+                <p class='text-muted-foreground mt-2'>{service.description}</p>
+                <div class='mt-4 flex flex-wrap gap-2'>
+                  {service.tags.map(tag => (
+                    <Badge key={tag} variant='secondary'>
+                      {tag}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+              <CardContent className='p-8 md:w-2/3'>
+                <h4 class='text-muted-foreground mb-4 font-semibold'>服务内容</h4>
+                <ul class='grid gap-3 md:grid-cols-2'>
+                  {service.features.map(feature => (
+                    <li class='flex items-start gap-2'>
+                      <span class='text-primary'>✓</span>
+                      <span class='text-sm'>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+                <div class='mt-6'>
+                  <Button variant='outline' asChild>
+                    <a href='/contact'>咨询详情</a>
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Process Section -->
+  <section class='bg-muted/50 py-12'>
+    <div class='container mx-auto px-4'>
+      <h2 class='mb-8 text-center text-2xl font-bold'>服务流程</h2>
+      <div class='grid gap-6 md:grid-cols-4'>
+        {
+          process.map(item => (
+            <div class='relative text-center'>
+              <div class='bg-primary text-primary-foreground mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full text-xl font-bold'>
+                {item.step}
+              </div>
+              <h3 class='mb-2 font-semibold'>{item.title}</h3>
+              <p class='text-muted-foreground text-sm'>{item.description}</p>
+              {item.step !== '04' && (
+                <div class='border-muted-foreground/30 absolute top-8 left-1/2 hidden w-full border-t border-dashed md:block' />
+              )}
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class='py-12'>
+    <div class='container mx-auto px-4 text-center'>
+      <h2 class='mb-4 text-2xl font-bold'>准备好开始了吗？</h2>
+      <p class='text-muted-foreground mb-6'>联系我们，获取适合您家庭的专业建议</p>
+      <Button size='lg' asChild>
+        <a href='/contact'>立即咨询</a>
+      </Button>
+    </div>
+  </section>
+</Layout>

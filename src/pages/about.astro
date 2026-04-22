@@ -1,0 +1,167 @@
+---
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import Layout from '@/layouts/Layout.astro';
+import type { PageMeta } from '@/lib/constants';
+
+const meta: PageMeta = {
+  title: '关于我们 - 91cost',
+  description: '91cost 专注于家庭暖通、空气健康和节能管理服务',
+  ogType: 'website',
+};
+
+const stats = [
+  { label: '服务家庭', value: '1,000+' },
+  { label: '完成项目', value: '300+' },
+  { label: '节能效果', value: '18%+' },
+  { label: '数据接入', value: '100万+' },
+];
+
+const values = [
+  {
+    icon: '🎯',
+    title: '专业专注',
+    description: '深耕家庭暖通场景多年，为每个家庭提供合适方案',
+  },
+  {
+    icon: '💡',
+    title: '数据驱动',
+    description: '以能耗和空气质量数据为基础，科学优化居住体验',
+  },
+  {
+    icon: '🤝',
+    title: '开放共享',
+    description: '推动家庭数据共享，让家庭成员更容易协同管理',
+  },
+  {
+    icon: '📈',
+    title: '持续创新',
+    description: '不断探索新技术，为家庭客户提供更优质的服务',
+  },
+];
+
+const team = [
+  {
+    name: '王工',
+    role: '家庭舒适顾问',
+    description: '15年+暖通设计经验，熟悉家庭空调与新风方案',
+    avatar: '👨‍💻',
+  },
+  {
+    name: '李工',
+    role: '空气健康专家',
+    description: '负责空气质量监测、净化与提醒方案设计',
+    avatar: '👩‍💻',
+  },
+  {
+    name: '张工',
+    role: '节能方案专家',
+    description: '负责家庭用能分析和节能优化建议',
+    avatar: '👨‍🎨',
+  },
+  {
+    name: '陈工',
+    role: '数据平台负责人',
+    description: '负责家庭数据看板和共享查询平台',
+    avatar: '👩‍🔬',
+  },
+];
+---
+
+<Layout {...meta}>
+  <!-- Hero Section -->
+  <section class='from-primary/5 to-background bg-linear-to-b py-16'>
+    <div class='container mx-auto px-4 text-center'>
+      <h1 class='mb-4 text-4xl font-bold tracking-tight'>关于我们</h1>
+      <p class='text-muted-foreground mx-auto mb-8 max-w-2xl text-lg'>91cost 专注于家庭暖通、空气健康和节能管理</p>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class='py-12'>
+    <div class='container mx-auto px-4'>
+      <div class='grid gap-4 md:grid-cols-4'>
+        {
+          stats.map(stat => (
+            <Card className='text-center'>
+              <CardContent className='py-6'>
+                <div class='text-primary mb-2 text-4xl font-bold'>{stat.value}</div>
+                <div class='text-muted-foreground text-sm'>{stat.label}</div>
+              </CardContent>
+            </Card>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission Section -->
+  <section class='bg-muted/50 py-12'>
+    <div class='container mx-auto px-4'>
+      <div class='mx-auto max-w-3xl text-center'>
+        <h2 class='mb-6 text-2xl font-bold'>我们的使命</h2>
+        <p class='text-muted-foreground text-lg leading-relaxed'>
+          在更注重生活品质的今天，家庭舒适度和空气健康已经成为许多用户关心的重点。我们
+          相信，通过专业的家庭暖通方案和科学的数据管理，可以帮助每个家庭获得更舒适、
+          更节能的居住体验。我们的团队由一群深耕暖通与数据技术的工程师组成，致力于让 家庭设备更智能、空气更健康。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Values Section -->
+  <section class='py-12'>
+    <div class='container mx-auto px-4'>
+      <h2 class='mb-8 text-center text-2xl font-bold'>核心价值观</h2>
+      <div class='grid gap-6 md:grid-cols-2 lg:grid-cols-4'>
+        {
+          values.map(value => (
+            <Card className='text-center'>
+              <CardHeader>
+                <div class='mx-auto text-4xl'>{value.icon}</div>
+                <CardTitle className='mt-4'>{value.title}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <CardDescription>{value.description}</CardDescription>
+              </CardContent>
+            </Card>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section class='bg-muted/50 py-12'>
+    <div class='container mx-auto px-4'>
+      <h2 class='mb-8 text-center text-2xl font-bold'>核心团队</h2>
+      <div class='grid gap-6 md:grid-cols-2 lg:grid-cols-4'>
+        {
+          team.map(member => (
+            <Card>
+              <CardHeader className='text-center'>
+                <div class='mx-auto text-5xl'>{member.avatar}</div>
+                <CardTitle className='mt-4'>{member.name}</CardTitle>
+                <CardDescription className='text-primary'>{member.role}</CardDescription>
+              </CardHeader>
+              <CardContent className='text-center'>
+                <p class='text-muted-foreground text-sm'>{member.description}</p>
+              </CardContent>
+            </Card>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class='py-12'>
+    <div class='container mx-auto px-4 text-center'>
+      <h2 class='mb-4 text-2xl font-bold'>期待与您合作</h2>
+      <p class='text-muted-foreground mb-6'>无论您有任何问题或需求，都可以通过以下方式联系我们</p>
+      <Button size='lg' asChild>
+        <a href='/contact'>联系我们</a>
+      </Button>
+    </div>
+  </section>
+</Layout>

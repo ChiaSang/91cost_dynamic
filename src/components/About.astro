@@ -1,0 +1,71 @@
+---
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+
+const features = [
+  {
+    title: '家庭友好',
+    description: '以家庭居住场景为中心，提供更贴近日常生活的方案',
+    icon: '👥',
+  },
+  {
+    title: '按需定制',
+    description: '根据户型、人数和使用习惯定制舒适方案',
+    icon: '🎯',
+  },
+  {
+    title: '快速响应',
+    description: '咨询、上门和售后都有明确响应机制',
+    icon: '🚀',
+  },
+  {
+    title: '持续支持',
+    description: '安装后仍提供长期使用建议和维护支持',
+    icon: '🔄',
+  },
+];
+
+const stats = [
+  { label: '服务家庭', value: '1,000+' },
+  { label: '完成项目', value: '300+' },
+  { label: '节能效果', value: '18%+' },
+  { label: '满意度', value: '99%' },
+];
+---
+
+<section id='about' class='bg-muted/50 py-20'>
+  <div class='container mx-auto px-4'>
+    <div class='mb-12 text-center'>
+      <h2 class='mb-4 text-3xl font-bold tracking-tight sm:text-4xl'>关于我们</h2>
+      <p class='text-muted-foreground mx-auto max-w-2xl'>91cost 专注于家庭暖通、空气健康和节能管理</p>
+    </div>
+
+    <!-- Stats Section -->
+    <div class='mb-16 grid gap-4 md:grid-cols-4'>
+      {
+        stats.map(stat => (
+          <Card className='text-center'>
+            <CardContent className='pt-6'>
+              <div class='text-primary mb-2 text-4xl font-bold'>{stat.value}</div>
+              <div class='text-muted-foreground text-sm'>{stat.label}</div>
+            </CardContent>
+          </Card>
+        ))
+      }
+    </div>
+
+    <!-- Features Grid -->
+    <div class='grid gap-6 md:grid-cols-2 lg:grid-cols-4'>
+      {
+        features.map(feature => (
+          <Card>
+            <CardHeader>
+              <div class='mb-2 text-3xl'>{feature.icon}</div>
+              <CardTitle className='text-lg'>{feature.title}</CardTitle>
+              <CardDescription>{feature.description}</CardDescription>
+            </CardHeader>
+          </Card>
+        ))
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,63 @@
+---
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+
+const services = [
+  {
+    title: '家庭空调优化',
+    description: '针对客厅、卧室与全屋空调系统进行舒适度与能耗优化',
+    features: ['空调布局建议', '出风优化', '能耗评估'],
+    icon: '❄️',
+  },
+  {
+    title: '新风与净化',
+    description: '为家庭提供新风、除湿、净化和换气一体化方案',
+    features: ['新风设计', '净化配置', '除湿方案', '噪音控制'],
+    icon: '🌬️',
+  },
+  {
+    title: '家庭能耗管理',
+    description: '帮您看懂家里的电费、水费和设备能耗，找到节能空间',
+    features: ['用能统计', '账单分析', '节能建议', '异常提醒'],
+    icon: '📊',
+  },
+  {
+    title: '空气健康监测',
+    description: '实时查看温湿度、CO2、PM2.5等指标，守护家人呼吸健康',
+    features: ['数据看板', '超标提醒', '历史趋势', '手机查询'],
+    icon: '💨',
+  },
+];
+---
+
+<section id='services' class='py-20'>
+  <div class='container mx-auto px-4'>
+    <div class='mb-12 text-center'>
+      <h2 class='mb-4 text-3xl font-bold tracking-tight sm:text-4xl'>家庭服务</h2>
+      <p class='text-muted-foreground mx-auto max-w-2xl'>围绕家庭舒适、空气健康和节能用能，提供实用的解决方案</p>
+    </div>
+
+    <div class='grid gap-6 md:grid-cols-2 lg:grid-cols-4'>
+      {
+        services.map(service => (
+          <Card className='transition-all hover:shadow-lg'>
+            <CardHeader>
+              <div class='mb-2 text-4xl'>{service.icon}</div>
+              <CardTitle className='text-xl'>{service.title}</CardTitle>
+              <CardDescription>{service.description}</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div class='flex flex-wrap gap-2'>
+                {service.features.map(feature => (
+                  <Badge key={feature} variant='secondary' className='text-xs'>
+                    {feature}
+                  </Badge>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        ))
+      }
+    </div>
+  </div>
+</section>

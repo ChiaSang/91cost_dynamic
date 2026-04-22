@@ -1,0 +1,73 @@
+---
+const currentYear = new Date().getFullYear();
+
+const footerLinks = {
+  services: {
+    title: '解决方案',
+    links: [
+      { label: '家庭能耗管理', href: '/solutions' },
+      { label: '空气健康监测', href: '/solutions' },
+    ],
+  },
+  tools: {
+    title: '数据平台',
+    links: [
+      { label: '家庭用能看板', href: '/data' },
+      { label: '空气质量监测', href: '/data' },
+    ],
+  },
+  company: {
+    title: '关于我们',
+    links: [
+      { label: '公司简介', href: '/about' },
+      { label: '核心团队', href: '/about' },
+      { label: '联系我们', href: '/contact' },
+    ],
+  },
+};
+---
+
+<footer class='bg-muted/50 border-t'>
+  <div class='container mx-auto px-4 py-12'>
+    <div class='grid gap-8 md:grid-cols-4'>
+      <!-- Brand Section -->
+      <div class='md:col-span-1'>
+        <a href='/' class='flex items-center gap-2'>
+          <span class='text-primary text-xl font-bold'>91COST</span>
+        </a>
+        <p class='text-muted-foreground mt-4 text-sm'>面向个人和家庭用户，提供风水冷暖全套解决方案</p>
+      </div>
+
+      <!-- Links Sections -->
+      {
+        Object.values(footerLinks).map(section => (
+          <div>
+            <h3 class='mb-4 text-sm font-semibold'>{section.title}</h3>
+            <ul class='space-y-2'>
+              {section.links.map(link => (
+                <li>
+                  <a href={link.href} class='text-muted-foreground hover:text-primary text-sm transition-colors'>
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class='mt-12 border-t pt-8'>
+      <div class='flex flex-col items-center justify-between gap-4 md:flex-row'>
+        <p class='text-muted-foreground text-sm'>
+          © {currentYear} 91cost. 保留所有权利。
+        </p>
+        <div class='flex gap-4'>
+          <a href='#' class='text-muted-foreground hover:text-primary text-sm transition-colors'> 隐私政策 </a>
+          <a href='#' class='text-muted-foreground hover:text-primary text-sm transition-colors'> 服务条款 </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

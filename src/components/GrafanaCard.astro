@@ -1,0 +1,99 @@
+---
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+
+interface GrafanaCardProps {
+  title: string;
+  description: string;
+  url: string;
+  metrics?: {
+    label: string;
+    value: string;
+    trend?: 'up' | 'down' | 'stable';
+  }[];
+  tags?: string[];
+  preview?: string;
+}
+
+const props = Astro.props as GrafanaCardProps;
+const { title, description, url, metrics, tags, preview } = props;
+---
+
+<Card className='group hover:border-primary/50 relative overflow-hidden transition-all hover:shadow-lg'>
+  <!-- Preview Area -->
+  {
+    preview && (
+      <div class='bg-muted relative h-48 overflow-hidden rounded-t-lg'>
+        <img
+          src={preview}
+          alt={`${title} preview`}
+          class='h-full w-full object-cover opacity-80 transition-opacity group-hover:opacity-100'
+        />
+        <div class='absolute inset-0 bg-linear-to-t from-black/60 to-transparent' />
+        <Badge className='absolute bottom-3 left-3' variant='secondary'>
+          数据看板
+        </Badge>
+      </div>
+    )
+  }
+
+  <CardHeader>
+    <div class='flex items-start justify-between'>
+      <div class='flex-1'>
+        <CardTitle className='text-xl'>{title}</CardTitle>
+        <CardDescription className='mt-2'>{description}</CardDescription>
+      </div>
+      <div class='text-3xl'>📊</div>
+    </div>
+  </CardHeader>
+
+  <!-- Metrics Grid -->
+  {
+    metrics && metrics.length > 0 && (
+      <CardContent>
+        <div class='mb-4 grid grid-cols-2 gap-3'>
+          {metrics.map(metric => (
+            <div class='bg-muted/50 rounded-lg p-3'>
+              <div class='text-muted-foreground text-xs'>{metric.label}</div>
+              <div class='mt-1 flex items-center gap-2'>
+                <span class='text-lg font-semibold'>{metric.value}</span>
+                {metric.trend && (
+                  <span
+                    class={`text-xs ${
+                      metric.trend === 'up'
+                        ? 'text-green-500'
+                        : metric.trend === 'down'
+                          ? 'text-red-500'
+                          : 'text-muted-foreground'
+                    }`}
+                  >
+                    {metric.trend === 'up' ? '↑' : metric.trend === 'down' ? '↓' : '→'}
+                  </span>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Tags */}
+        {tags && tags.length > 0 && (
+          <div class='mb-4 flex flex-wrap gap-2'>
+            {tags.map(tag => (
+              <Badge key={tag} variant='outline' className='text-xs'>
+                {tag}
+              </Badge>
+            ))}
+          </div>
+        )}
+
+        {/* Action Button */}
+        <Button className='w-full' variant='outline' asChild>
+          <a href={url} target='_blank' rel='noopener noreferrer'>
+            打开看板 →
+          </a>
+        </Button>
+      </CardContent>
+    )
+  }
+</Card>

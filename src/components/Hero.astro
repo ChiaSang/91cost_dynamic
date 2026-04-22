@@ -1,0 +1,28 @@
+---
+import { Button } from '@/components/ui/button';
+---
+
+<section class='from-primary/5 to-background relative overflow-hidden bg-linear-to-b py-20 md:py-32'>
+  <div class='container mx-auto px-4'>
+    <div class='mx-auto max-w-3xl text-center'>
+      <h1 class='mb-6 text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl'>
+        <span class='text-primary'>让家更舒适</span>，让空气更健康
+      </h1>
+      <p class='text-muted-foreground mb-8 text-lg sm:text-xl'>
+        面向家庭客户和个人用户，提供暖通优化、新风净化、能耗管理与空气质量查询服务
+      </p>
+      <div class='flex flex-col gap-4 sm:flex-row sm:justify-center'>
+        <Button size='lg' asChild>
+          <a href='/solutions'>了解方案</a>
+        </Button>
+        <Button size='lg' variant='outline' asChild>
+          <a href='/contact'>预约咨询</a>
+        </Button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Decorative Background Elements -->
+  <div class='bg-primary/10 absolute -top-40 -right-40 h-80 w-80 rounded-full blur-3xl'></div>
+  <div class='bg-primary/10 absolute -bottom-40 -left-40 h-80 w-80 rounded-full blur-3xl'></div>
+</section>

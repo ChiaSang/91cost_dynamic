@@ -1,0 +1,70 @@
+---
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+---
+
+<section id='contact' class='py-20'>
+  <div class='container mx-auto px-4'>
+    <div class='mb-12 text-center'>
+      <h2 class='mb-4 text-3xl font-bold tracking-tight sm:text-4xl'>联系我们</h2>
+      <p class='text-muted-foreground mx-auto max-w-2xl'>家庭装修、空调改造、新风净化或空气质量问题，都欢迎咨询</p>
+    </div>
+
+    <div class='mx-auto grid gap-8 lg:max-w-4xl'>
+      <Card>
+        <CardHeader>
+          <CardTitle className='text-2xl'>发送咨询</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form class='grid gap-4' action='#' method='POST'>
+            <div class='grid gap-2'>
+              <Label htmlFor='name'>姓名</Label>
+              <Input id='name' name='name' placeholder='请输入您的姓名' required />
+            </div>
+            <div class='grid gap-2'>
+              <Label htmlFor='email'>邮箱</Label>
+              <Input id='email' name='email' type='email' placeholder='请输入您的邮箱' required />
+            </div>
+            <div class='grid gap-2'>
+              <Label htmlFor='company'>公司名称</Label>
+              <Input id='company' name='company' placeholder='请输入您的公司名称（可选）' />
+            </div>
+            <div class='grid gap-2'>
+              <Label htmlFor='message'>咨询内容</Label>
+              <Textarea id='message' name='message' placeholder='请详细描述您的需求或问题...' rows={5} required />
+            </div>
+            <Button type='submit' size='lg' className='w-full'> 提交咨询 </Button>
+          </form>
+        </CardContent>
+      </Card>
+
+      <!-- Contact Info Cards -->
+      <div class='grid gap-4 md:grid-cols-3'>
+        <Card>
+          <CardContent className='pt-6 text-center'>
+            <div class='mb-2 text-2xl'>📧</div>
+            <div class='text-sm font-medium'>邮箱</div>
+            <div class='text-muted-foreground mt-1'>contact@91cost.com</div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className='pt-6 text-center'>
+            <div class='mb-2 text-2xl'>📱</div>
+            <div class='text-sm font-medium'>电话</div>
+            <div class='text-muted-foreground mt-1'>+86 123 4567 8901</div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className='pt-6 text-center'>
+            <div class='mb-2 text-2xl'>💬</div>
+            <div class='text-sm font-medium'>微信</div>
+            <div class='text-muted-foreground mt-1'>91cost_service</div>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  </div>
+</section>
