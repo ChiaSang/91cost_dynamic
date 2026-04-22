@@ -1,11 +1,11 @@
 import js from '@eslint/js';
-import tsParser from '@typescript-eslint/parser';
 import tsPlugin from '@typescript-eslint/eslint-plugin';
-import reactPlugin from 'eslint-plugin-react';
-import reactHooksPlugin from 'eslint-plugin-react-hooks';
+import tsParser from '@typescript-eslint/parser';
+import prettierConfig from 'eslint-config-prettier';
 import astroPlugin from 'eslint-plugin-astro';
 import jsxA11yPlugin from 'eslint-plugin-jsx-a11y';
-import prettierConfig from 'eslint-config-prettier';
+import reactPlugin from 'eslint-plugin-react';
+import reactHooksPlugin from 'eslint-plugin-react-hooks';
 
 export default [
   // JavaScript/TypeScriptファイル用の基本設定
@@ -33,6 +33,9 @@ export default [
         localStorage: 'readonly',
         document: 'readonly',
         window: 'readonly',
+        fetch: 'readonly',
+        HTMLInputElement: 'readonly',
+        HTMLTextAreaElement: 'readonly',
         URL: 'readonly',
       },
     },
