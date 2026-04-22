@@ -40,7 +40,7 @@ jobs:
       - name: Run tests after update
         run: |
           pnpm install --frozen-lockfile
-          pnpm type-check
+          pnpm type-check:ci
           pnpm lint
           pnpm test:run
           pnpm build
