@@ -2,7 +2,7 @@
 // src/pages/index.astro
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import AreaChartCard from '@/components/AreaChart';
+import PowerChartCard from '@/components/PowerChartCard';
 import Layout from '@/layouts/Layout.astro';
 import type { PageMeta } from '@/lib/constants';
 
@@ -379,9 +379,11 @@ const pm25Percent = Math.max(0, Math.min(100, Math.round((pm25Value / 75) * 100)
           </div>
         </Card>
 
-        <Card className='w-full overflow-hidden border-blue-100 bg-linear-to-br from-blue-50 via-white to-cyan-50'>
+        <Card
+          className='w-full overflow-hidden border-indigo-100 bg-linear-to-br from-indigo-50 via-white to-blue-50 lg:grid-cols-2'
+        >
           <CardContent className='p-8'>
-            <AreaChartCard client:load />
+            <PowerChartCard client:load />
           </CardContent>
         </Card>
       </div>
