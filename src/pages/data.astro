@@ -2,7 +2,7 @@
 import GrafanaCard from '@/components/GrafanaCard.astro';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import Layout from '@/layouts/Layout.astro';
-import type { PageMeta } from '@/lib/constants';
+import { getPageUrl, type PageMeta } from '@/lib/constants';
 
 const meta: PageMeta = {
   title: '数据平台 - 91cost',
@@ -14,7 +14,7 @@ const dataDashboards = [
   {
     title: '家庭用能监测',
     description: '实时查看家庭电、水、燃气等用能数据，支持分项统计和趋势分析',
-    url: '/contact',
+    url: getPageUrl('contact'),
     metrics: [
       { label: '今日用电', value: '12.4 kWh', trend: 'down' },
       { label: '今日用气', value: '3.1 m³', trend: 'stable' },
@@ -27,7 +27,7 @@ const dataDashboards = [
   {
     title: '空气健康监测',
     description: '实时监测室内温湿度、CO2、PM2.5、甲醛等空气指标',
-    url: '/contact',
+    url: getPageUrl('contact'),
     metrics: [
       { label: '当前温度', value: '24.5°C', trend: 'stable' },
       { label: '相对湿度', value: '55%', trend: 'stable' },
@@ -40,7 +40,7 @@ const dataDashboards = [
   {
     title: '设备运行状态',
     description: '监测空调、净化器、新风机等设备运行状态和能效表现',
-    url: '/contact',
+    url: getPageUrl('contact'),
     metrics: [
       { label: '运行时长', value: '6.2 h', trend: 'stable' },
       { label: '当前功率', value: '0.42 kW', trend: 'down' },
@@ -53,7 +53,7 @@ const dataDashboards = [
   {
     title: '家庭数据统计',
     description: '支持自定义时间范围、趋势分析和数据导出，方便家庭长期管理',
-    url: '/contact',
+    url: getPageUrl('contact'),
     metrics: [
       { label: '月度节能', value: '12.5%', trend: 'up' },
       { label: '空气达标率', value: '96.8%', trend: 'up' },
@@ -112,7 +112,7 @@ const dataFeatures = [
           <h2 class='mb-2 text-2xl font-bold'>数据面板</h2>
           <p class='text-muted-foreground'>点击即可查看家庭数据监测面板</p>
         </div>
-        <a href='/contact' target='_blank' class='text-primary text-sm hover:underline'> 预约开通 → </a>
+        <a href={getPageUrl('contact')} target='_blank' class='text-primary text-sm hover:underline'> 预约开通 → </a>
       </div>
 
       <div class='grid gap-6 md:grid-cols-2'>
@@ -159,7 +159,7 @@ const dataFeatures = [
           <h3 class='mb-4 text-2xl font-bold'>需要接入数据？</h3>
           <p class='text-muted-foreground mb-6'>我们可以帮助您接入家庭能耗和空气质量数据，提供专业的设置支持</p>
           <a
-            href='/contact'
+            href={getPageUrl('contact')}
             class='bg-primary text-primary-foreground hover:bg-primary/90 inline-flex items-center justify-center rounded-md px-6 py-3 text-sm font-medium shadow transition-colors'
           >
             联系我们

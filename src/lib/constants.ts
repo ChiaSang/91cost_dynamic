@@ -72,6 +72,18 @@ export const getCurrentBaseUrl = () => {
 };
 export const getCurrentAssetsUrl = () => (ASSETS_URL.STATUS ? ASSETS_URL[getCurrentEnv()] : '');
 
+export const getPageUrl = (path = '') => {
+  const baseUrl = getCurrentBaseUrl();
+  const normalizedBase = baseUrl === '/' ? '' : baseUrl.replace(/\/$/, '');
+  const normalizedPath = path.replace(/^\/+/, '').replace(/\.html$/, '');
+
+  if (!normalizedPath) {
+    return `${normalizedBase}/`;
+  }
+
+  return `${normalizedBase}/${normalizedPath}.html`;
+};
+
 // サイトの基本情報（環境に応じて動的に設定）
 export const SITE_CONFIG = {
   name: '91cost',

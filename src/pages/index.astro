@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import PowerChartCard from '@/components/PowerChartCard';
 import Layout from '@/layouts/Layout.astro';
-import type { PageMeta } from '@/lib/constants';
+import { getPageUrl, type PageMeta } from '@/lib/constants';
 
 const meta: PageMeta = {
   title: '91cost - 家庭暖通与空气健康平台',
@@ -17,25 +17,25 @@ const solutions = [
     title: '家庭空调优化',
     description: '围绕客厅、卧室和全屋空调使用场景，提升舒适度并降低能耗',
     icon: '❄️',
-    link: '/solutions',
+    link: getPageUrl('solutions'),
   },
   {
     title: '家庭能耗监测',
     description: '实时查看家庭用电、用水和设备运行情况，帮助您节能省心',
     icon: '📊',
-    link: '/data',
+    link: getPageUrl('data'),
   },
   {
     title: '空气健康监测',
     description: '温湿度、CO2、PM2.5 等指标实时监测与提醒，守护家人呼吸健康',
     icon: '🌬️',
-    link: '/data',
+    link: getPageUrl('data'),
   },
   {
     title: '数据共享查询',
     description: '家庭能耗和空气质量数据统一查询，支持手机查看与历史趋势分析',
     icon: '🔗',
-    link: '/data',
+    link: getPageUrl('data'),
   },
 ];
 
@@ -366,7 +366,7 @@ const pm25Percent = Math.max(0, Math.min(100, Math.round((pm25Value / 75) * 100)
                 </li>
               </ul>
               <Button asChild>
-                <a href='/data'>进入数据平台 →</a>
+                <a href={getPageUrl('data')}>进入数据平台 →</a>
               </Button>
             </div>
             <div class='bg-card/40 p-8'>

@@ -3,7 +3,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import Layout from '@/layouts/Layout.astro';
-import type { PageMeta } from '@/lib/constants';
+import { getPageUrl, type PageMeta } from '@/lib/constants';
 
 const meta: PageMeta = {
   title: '解决方案 - 91cost',
@@ -108,7 +108,7 @@ const process = [
                 </ul>
                 <div class='mt-6'>
                   <Button variant='outline' asChild>
-                    <a href='/contact'>咨询详情</a>
+                    <a href={getPageUrl('contact')}>咨询详情</a>
                   </Button>
                 </div>
               </CardContent>
@@ -148,7 +148,7 @@ const process = [
       <h2 class='mb-4 text-2xl font-bold'>准备好开始了吗？</h2>
       <p class='text-muted-foreground mb-6'>联系我们，获取适合您家庭的专业建议</p>
       <Button size='lg' asChild>
-        <a href='/contact'>立即咨询</a>
+        <a href={getPageUrl('contact')}>立即咨询</a>
       </Button>
     </div>
   </section>
