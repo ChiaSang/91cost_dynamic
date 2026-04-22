@@ -117,7 +117,7 @@ const HelpDialog = () => {
             <p className='text-muted-foreground text-sm'>
               詳細なドキュメントは
               <a
-                href='https://github.com/n-tong009/astro-shadcn-template'
+                href='https://github.com/n-tong009/91cost_dynamic'
                 target='_blank'
                 rel='noopener noreferrer'
                 className='text-primary ml-1 hover:underline'

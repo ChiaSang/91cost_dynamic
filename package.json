@@ -1,5 +1,5 @@
 {
-  "name": "astro-shadcn-template",
+  "name": "91cost_dynamic",
   "type": "module",
   "version": "0.1.0",
   "engines": {
@@ -28,7 +28,7 @@
     "test:run": "vitest run",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage",
-    "build:github": "cross-env PUBLIC_BASE_URL=/astro-shadcn-template/ pnpm build"
+    "build:github": "cross-env PUBLIC_BASE_URL=/91cost_dynamic/ pnpm build"
   },
   "dependencies": {
     "@aikidosec/safe-chain": "^1.0.24",
