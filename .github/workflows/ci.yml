@@ -194,7 +194,7 @@ jobs:
         run: pnpm build
         env:
           NODE_ENV: production
-          PUBLIC_BASE_URL: /astro-shadcn-template/
+          PUBLIC_BASE_URL: /91cost_dynamic/
 
       - name: Upload build artifacts
         uses: actions/upload-pages-artifact@v3
