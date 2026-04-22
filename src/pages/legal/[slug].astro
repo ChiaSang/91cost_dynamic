@@ -1,0 +1,57 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import type { PageMeta } from '@/lib/constants';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const legalEntries = await getCollection('legal');
+  return legalEntries.map(entry => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const meta: PageMeta = {
+  title: `${entry.data.title} - 91cost`,
+  description: entry.data.description,
+  ogType: 'website',
+};
+---
+
+<Layout {...meta}>
+  <section class='py-16'>
+    <div class='container mx-auto max-w-3xl px-4'>
+      <h1 class='mb-4 text-4xl font-bold tracking-tight'>{entry.data.title}</h1>
+      <p class='text-muted-foreground mb-12'>最后更新日期：{entry.data.updatedDate}</p>
+
+      <div class='legal-prose'>
+        <Content />
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  @reference "../../styles/global.css";
+  .legal-prose :global(h2) {
+    @apply text-primary mt-10 mb-4 text-2xl font-semibold;
+  }
+  .legal-prose :global(p) {
+    @apply text-muted-foreground mb-4 leading-7;
+  }
+  .legal-prose :global(ul) {
+    @apply mb-4 list-disc pl-6;
+  }
+  .legal-prose :global(li) {
+    @apply text-muted-foreground mb-2 leading-7;
+  }
+  .legal-prose :global(a) {
+    @apply text-primary hover:underline;
+  }
+  .legal-prose :global(strong) {
+    @apply text-foreground font-semibold;
+  }
+</style>
