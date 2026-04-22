@@ -1,12 +1,12 @@
 // 組み込みモジュール
 import { promises as fs } from 'fs';
+import path from 'node:path';
 import { fileURLToPath, URL } from 'node:url';
 
 // 外部ライブラリ/フレームワーク
 import react from '@astrojs/react';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'astro/config';
-import glob from 'fast-glob';
 
 // プロジェクト内モジュール
 import { ASSETS_URL, getCurrentAssetsUrl, getCurrentBaseUrl, getCurrentSiteUrl } from './src/lib/constants.ts';
@@ -24,6 +24,23 @@ const outDirUrl = `./dist${getCurrentBaseUrl()}`; // 最後のスラッシュは
 
 // ASSETS_URLが有効な場合のアセット出力先を設定
 const assetsDir = ASSETS_URL.STATUS ? new URL(assetsUrl).pathname.replace(/^\//, '') : '_astro';
+
+const collectPaths = async (dirPath, files = [], directories = []) => {
+  const entries = await fs.readdir(dirPath, { withFileTypes: true });
+
+  for (const entry of entries) {
+    const fullPath = path.join(dirPath, entry.name);
+
+    if (entry.isDirectory()) {
+      directories.push(fullPath);
+      await collectPaths(fullPath, files, directories);
+    } else {
+      files.push(fullPath);
+    }
+  }
+
+  return { files, directories };
+};
 
 export default defineConfig({
   site: process.env.PUBLIC_BASE_URL ? 'https://github.com/ChiaSang/91cost_dynamic' : siteUrl,
@@ -58,12 +75,13 @@ export default defineConfig({
         'astro:build:done': async ({ dir }) => {
           try {
             const outDirPath = fileURLToPath(dir);
+            const { files, directories } = await collectPaths(outDirPath);
 
             // 不要なシステムファイルをglobパターンで検索
             // .DS_Store: macOSのフォルダメタデータファイル
             // Thumbs.db: Windowsのサムネイルキャッシュ
             // Desktop.ini: Windowsフォルダの表示設定ファイル
-            const junkFiles = await glob(`${outDirPath}/**/{.DS_Store,Thumbs.db,Desktop.ini}`);
+            const junkFiles = files.filter(filePath => /[\\/](\.DS_Store|Thumbs\.db|Desktop\.ini)$/.test(filePath));
             console.log(`Found ${junkFiles.length} junk files to delete`);
 
             // 検出した不要ファイルを一つずつ削除
@@ -73,7 +91,7 @@ export default defineConfig({
 
             // macOS特有の隠しディレクトリを検索
             // __MAXCOSXディレクトリはzipファイル解凍時などに生成される不要ディレクトリ
-            const macosxDirs = await glob(`${outDirPath}/**/__MACOSX`);
+            const macosxDirs = directories.filter(dirPath => path.basename(dirPath) === '__MACOSX');
             console.log(`Found ${macosxDirs.length} __MACOSX directories to delete`);
 
             // 検出した__MAXCOSXディレクトリを一つずつ削除
