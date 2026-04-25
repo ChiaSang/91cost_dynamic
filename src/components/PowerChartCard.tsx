@@ -115,7 +115,7 @@ export default function PowerChartCard() {
           to: String(now),
         };
 
-        const res = await fetch('https://gra.91cost.cn/api/ds/query?ds_type=influxdb', {
+        const res = await fetch('https://2.4321234.com/api/ds/query?ds_type=influxdb', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -133,9 +133,15 @@ export default function PowerChartCard() {
         // Parse Grafana response frames
         const points: DataPoint[] = [];
         if (json.results) {
-          for (const result of json.results) {
+          const resultsList = (Array.isArray(json.results) ? json.results : Object.values(json.results)) as Array<{
+            frames?: GrafanaFrame[];
+          }>;
+          for (const result of resultsList) {
             if (!result.frames) continue;
-            for (const frame of result.frames) {
+            const framesList = (
+              Array.isArray(result.frames) ? result.frames : Object.values(result.frames)
+            ) as GrafanaFrame[];
+            for (const frame of framesList) {
               if (!frame.data?.values || !frame.schema?.fields) continue;
 
               const fields = frame.schema.fields;
