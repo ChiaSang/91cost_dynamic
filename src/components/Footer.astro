@@ -1,4 +1,5 @@
 ---
+import SettingsDialog from '@/components/SettingsDialog';
 import { getPageUrl } from '@/lib/constants';
 const currentYear = new Date().getFullYear();
 
@@ -64,7 +65,7 @@ const footerLinks = {
         <p class='text-muted-foreground text-sm'>
           © {currentYear} 91cost. 保留所有权利。
         </p>
-        <div class='flex gap-4'>
+        <div class='flex items-center gap-4'>
           <a
             href={getPageUrl('legal/privacy')}
             class='text-muted-foreground hover:text-primary text-sm transition-colors'
@@ -77,6 +78,9 @@ const footerLinks = {
           >
             服务条款
           </a>
+          <div class='md:hidden'>
+            <SettingsDialog client:load />
+          </div>
         </div>
       </div>
     </div>
