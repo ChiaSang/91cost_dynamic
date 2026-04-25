@@ -17,6 +17,7 @@
       "rollup": "^4.60.2",
       "immutable": "^5.1.5",
       "yaml": "^2.8.3",
+      "postcss": "^8.5.10",
       "anymatch>picomatch": "^2.3.2",
       "vite>picomatch": "^4.0.4",
       "@astrojs/internal-helpers>picomatch": "^4.0.4",
