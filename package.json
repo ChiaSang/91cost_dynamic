@@ -41,7 +41,7 @@
     "check:types": "corepack pnpm type-check:ci",
     "check:test": "corepack pnpm test:run",
     "check": "corepack pnpm check:security && corepack pnpm check:format && corepack pnpm check:lint && corepack pnpm check:types && corepack pnpm check:test",
-    "pre-push": "corepack pnpm check:security",
+    "pre-push": "corepack pnpm check:security && corepack pnpm check:types && corepack pnpm check:test",
     "lint": "eslint . --ext .js,.mjs,.ts,.jsx,.tsx,.astro",
     "lint:fix": "eslint . --ext .js,.mjs,.ts,.jsx,.tsx,.astro --fix",
     "format": "prettier --write .",

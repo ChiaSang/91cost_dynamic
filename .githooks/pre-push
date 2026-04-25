@@ -3,5 +3,5 @@ set -eu
 
 cd "$(git rev-parse --show-toplevel)"
 
-echo 'Running security audit before push...'
+echo 'Running pre-push checks (security + types + tests)...'
 corepack pnpm pre-push
