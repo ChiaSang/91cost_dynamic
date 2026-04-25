@@ -4,4 +4,4 @@ set -eu
 cd "$(git rev-parse --show-toplevel)"
 
 echo 'Running pre-push checks (security + types + tests)...'
-corepack pnpm pre-push
+pnpm run check:security && pnpm run check:types && pnpm run check:test
