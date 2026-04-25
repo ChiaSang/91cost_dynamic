@@ -237,7 +237,7 @@ export default function PowerChartCard() {
       </div>
 
       {/* Stats Row */}
-      <div className='mb-4 grid grid-cols-4 gap-3'>
+      <div className='mb-4 grid grid-cols-2 gap-3 sm:grid-cols-4'>
         <div className='rounded-lg bg-blue-50 p-3 dark:bg-blue-900/30'>
           <div className='text-xs text-blue-600 dark:text-blue-400'>当前功率</div>
           <div className='mt-1 text-lg font-semibold text-blue-700 dark:text-blue-300'>
