@@ -98,16 +98,6 @@ const SettingsDialog = () => {
               <Switch id='notifications' checked={notifications} onCheckedChange={setNotifications} />
             </div>
           </div>
-
-          <div className='space-y-4'>
-            <h4 className='font-medium'>版本信息</h4>
-            <div className='text-muted-foreground text-sm'>
-              <p>Astro v5.7.5</p>
-              <p>TailwindCSS v4.1.4</p>
-              <p>React v19.1.0</p>
-              <p>shadcn/ui v2.5.0</p>
-            </div>
-          </div>
         </div>
       </DialogContent>
     </Dialog>
