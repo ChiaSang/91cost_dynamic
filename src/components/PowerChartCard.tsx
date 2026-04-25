@@ -210,15 +210,17 @@ export default function PowerChartCard() {
       {/* Header */}
       <div className='mb-4 flex items-center justify-between'>
         <div>
-          <h3 className='text-xl font-bold text-slate-800'>实时功率监测</h3>
-          <p className='mt-1 text-sm text-slate-500'>设备功率 (W) 随时间变化趋势</p>
+          <h3 className='text-xl font-bold text-slate-800 dark:text-white'>实时功率监测</h3>
+          <p className='mt-1 text-sm text-slate-500 dark:text-gray-400'>设备功率 (W) 随时间变化趋势</p>
         </div>
-        <div className='flex items-center gap-1 rounded-lg border border-slate-200 bg-slate-50 p-0.5'>
+        <div className='flex items-center gap-1 rounded-lg border border-slate-200 bg-slate-50 p-0.5 dark:border-slate-600 dark:bg-slate-700'>
           {(Object.entries(TIME_RANGES) as [TimeRange, (typeof TIME_RANGES)[TimeRange]][]).map(([key, val]) => (
             <button
               key={key}
               className={`rounded-md px-2.5 py-1 text-xs font-medium transition-all ${
-                timeRange === key ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-500 hover:text-slate-700'
+                timeRange === key
+                  ? 'bg-white text-slate-900 shadow-sm dark:bg-slate-600 dark:text-white'
+                  : 'text-slate-500 hover:text-slate-700 dark:text-gray-400 dark:hover:text-gray-200'
               }`}
               onClick={() => setTimeRange(key)}
             >
@@ -230,27 +232,27 @@ export default function PowerChartCard() {
 
       {/* Stats Row */}
       <div className='mb-4 grid grid-cols-4 gap-3'>
-        <div className='rounded-lg bg-blue-50 p-3'>
-          <div className='text-xs text-blue-600'>当前功率</div>
-          <div className='mt-1 text-lg font-semibold text-blue-700'>
+        <div className='rounded-lg bg-blue-50 p-3 dark:bg-blue-900/30'>
+          <div className='text-xs text-blue-600 dark:text-blue-400'>当前功率</div>
+          <div className='mt-1 text-lg font-semibold text-blue-700 dark:text-blue-300'>
             {stats.current.toFixed(1)} <span className='text-xs font-normal'>W</span>
           </div>
         </div>
-        <div className='rounded-lg bg-slate-50 p-3'>
-          <div className='text-xs text-slate-500'>平均功率</div>
-          <div className='mt-1 text-lg font-semibold text-slate-700'>
+        <div className='rounded-lg bg-slate-50 p-3 dark:bg-slate-700/50'>
+          <div className='text-xs text-slate-500 dark:text-gray-400'>平均功率</div>
+          <div className='mt-1 text-lg font-semibold text-slate-700 dark:text-gray-200'>
             {stats.avg.toFixed(1)} <span className='text-xs font-normal'>W</span>
           </div>
         </div>
-        <div className='rounded-lg bg-emerald-50 p-3'>
-          <div className='text-xs text-emerald-600'>最低功率</div>
-          <div className='mt-1 text-lg font-semibold text-emerald-700'>
+        <div className='rounded-lg bg-emerald-50 p-3 dark:bg-emerald-900/30'>
+          <div className='text-xs text-emerald-600 dark:text-emerald-400'>最低功率</div>
+          <div className='mt-1 text-lg font-semibold text-emerald-700 dark:text-emerald-300'>
             {stats.min.toFixed(1)} <span className='text-xs font-normal'>W</span>
           </div>
         </div>
-        <div className='rounded-lg bg-amber-50 p-3'>
-          <div className='text-xs text-amber-600'>最高功率</div>
-          <div className='mt-1 text-lg font-semibold text-amber-700'>
+        <div className='rounded-lg bg-amber-50 p-3 dark:bg-amber-900/30'>
+          <div className='text-xs text-amber-600 dark:text-amber-400'>最高功率</div>
+          <div className='mt-1 text-lg font-semibold text-amber-700 dark:text-amber-300'>
             {stats.max.toFixed(1)} <span className='text-xs font-normal'>W</span>
           </div>
         </div>
@@ -261,8 +263,8 @@ export default function PowerChartCard() {
         {loading ? (
           <div className='flex h-full items-center justify-center'>
             <div className='flex flex-col items-center gap-3'>
-              <div className='h-8 w-8 animate-spin rounded-full border-2 border-blue-200 border-t-blue-600' />
-              <span className='text-sm text-slate-400'>加载功率数据...</span>
+              <div className='h-8 w-8 animate-spin rounded-full border-2 border-blue-200 border-t-blue-600 dark:border-blue-800 dark:border-t-blue-400' />
+              <span className='text-sm text-slate-400 dark:text-gray-500'>加载功率数据...</span>
             </div>
           </div>
         ) : (
@@ -274,15 +276,27 @@ export default function PowerChartCard() {
                   <stop offset='100%' stopColor='#3b82f6' stopOpacity={0.02} />
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray='3 3' stroke='#e2e8f0' vertical={false} />
+              <CartesianGrid
+                strokeDasharray='3 3'
+                stroke='#e2e8f0'
+                vertical={false}
+                className='dark:stroke-slate-700'
+              />
               <XAxis
                 dataKey='time'
                 axisLine={false}
                 tickLine={false}
                 tick={{ fill: '#94a3b8', fontSize: 11 }}
                 interval='preserveStartEnd'
+                className='dark:fill-gray-400'
               />
-              <YAxis axisLine={false} tickLine={false} tick={{ fill: '#94a3b8', fontSize: 12 }} unit='W' />
+              <YAxis
+                axisLine={false}
+                tickLine={false}
+                tick={{ fill: '#94a3b8', fontSize: 12 }}
+                unit='W'
+                className='dark:fill-gray-400'
+              />
               <Tooltip
                 contentStyle={{
                   backgroundColor: 'rgba(255,255,255,0.96)',
@@ -310,7 +324,7 @@ export default function PowerChartCard() {
 
       {/* Footer */}
       {error && (
-        <div className='mt-3 rounded-md bg-amber-50 px-3 py-2 text-xs text-amber-600'>
+        <div className='mt-3 rounded-md bg-amber-50 px-3 py-2 text-xs text-amber-600 dark:bg-amber-900/30 dark:text-amber-400'>
           提示: 使用模拟数据展示 ({error})
         </div>
       )}

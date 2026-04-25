@@ -48,7 +48,7 @@ const SettingsDialog = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant='ghost' size='icon' aria-label='設定'>
+        <Button variant='ghost' size='icon' aria-label='设置'>
           <svg
             xmlns='http://www.w3.org/2000/svg'
             width='20'
@@ -67,25 +67,25 @@ const SettingsDialog = () => {
       </DialogTrigger>
       <DialogContent className='max-h-[85dvh] overflow-y-auto pt-16 pb-8 sm:max-h-[80dvh]'>
         <DialogHeader>
-          <DialogTitle>設定</DialogTitle>
-          <DialogDescription>アプリケーションの設定を変更できます。</DialogDescription>
+          <DialogTitle>设置</DialogTitle>
+          <DialogDescription>更改应用程序的设置</DialogDescription>
         </DialogHeader>
         <div className='grid gap-6 py-4'>
           <div className='space-y-4'>
             <div>
-              <h4 className='mb-3 font-medium'>外観</h4>
+              <h4 className='mb-3 font-medium'>外观</h4>
               <RadioGroup value={theme} onValueChange={handleThemeChange}>
                 <div className='flex items-center space-x-2'>
                   <RadioGroupItem value='light' id='light' />
-                  <Label htmlFor='light'>ライト</Label>
+                  <Label htmlFor='light'>浅色</Label>
                 </div>
                 <div className='flex items-center space-x-2'>
                   <RadioGroupItem value='dark' id='dark' />
-                  <Label htmlFor='dark'>ダーク</Label>
+                  <Label htmlFor='dark'>深色</Label>
                 </div>
                 <div className='flex items-center space-x-2'>
                   <RadioGroupItem value='system' id='system' />
-                  <Label htmlFor='system'>システム設定に従う</Label>
+                  <Label htmlFor='system'>跟随系统</Label>
                 </div>
               </RadioGroup>
             </div>
@@ -93,14 +93,14 @@ const SettingsDialog = () => {
             <div className='flex items-center justify-between'>
               <div className='space-y-0.5'>
                 <Label htmlFor='notifications'>通知</Label>
-                <p className='text-muted-foreground text-sm'>アップデートの通知を受け取る</p>
+                <p className='text-muted-foreground text-sm'>接收更新通知</p>
               </div>
               <Switch id='notifications' checked={notifications} onCheckedChange={setNotifications} />
             </div>
           </div>
 
           <div className='space-y-4'>
-            <h4 className='font-medium'>バージョン情報</h4>
+            <h4 className='font-medium'>版本信息</h4>
             <div className='text-muted-foreground text-sm'>
               <p>Astro v5.7.5</p>
               <p>TailwindCSS v4.1.4</p>
