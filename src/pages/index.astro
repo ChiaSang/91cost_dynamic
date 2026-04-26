@@ -454,11 +454,11 @@ const pm25Percent = Math.max(0, Math.min(100, Math.round((pm25Value / 75) * 100)
       circle,
       rgba(15, 23, 42, 0.85) 0%,
       rgba(30, 58, 138, 0.55) 25%,
-      rgba(59, 130, 246, 0.20) 45%,
+      rgba(59, 130, 246, 0.2) 45%,
       transparent 65%
     );
     box-shadow:
-      0 0 6px rgba(15, 23, 42, 0.20),
+      0 0 6px rgba(15, 23, 42, 0.2),
       0 0 20px rgba(30, 58, 138, 0.08);
     animation:
       hero-float-light var(--dur, 14s) ease-in-out infinite,
@@ -807,7 +807,7 @@ const pm25Percent = Math.max(0, Math.min(100, Math.round((pm25Value / 75) * 100)
   @keyframes hero-pulse-light {
     0%,
     100% {
-      opacity: 0.70;
+      opacity: 0.7;
     }
     50% {
       opacity: 0.95;
