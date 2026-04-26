@@ -3,5 +3,5 @@ set -eu
 
 cd "$(git rev-parse --show-toplevel)"
 
-echo 'Running pre-push checks (security + types + tests)...'
-pnpm run check:security && pnpm run check:types && pnpm run check:test
+echo 'Running pre-push checks (security + format + types + tests)...'
+pnpm run check:security && pnpm run check:format && pnpm run check:types && pnpm run check:test
